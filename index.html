@@ -46,6 +46,7 @@
 
 <script>
 const { createApp } = Vue;
+const PrimeVue = window.PrimeVue;
 const { InputText, Button, Card } = PrimeVue;
 
 createApp({
@@ -65,7 +66,8 @@ createApp({
             this.teams[index].points++;
         }
     }
-}).component('p-input-text', InputText)
+}).use(PrimeVue)
+  .component('p-input-text', InputText)
   .component('p-button', Button)
   .component('p-card', Card)
   .mount('#app');
