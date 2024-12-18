@@ -1,10 +1,20 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Game Scoreboard</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <style>
+      .team-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+      .team {
+        flex: 1 1 calc(50% - 1rem);
+        box-sizing: border-box;
+      }
+    </style>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -18,15 +28,18 @@
           <p-button label="Add Team" @click="addTeam"></p-button>
       </div>
       <div v-if="teams.length" style="margin-top: 1rem;">
-          <div v-for="(team, index) in teams" :key="index" class="team" style="margin-bottom: 1rem;">
+        <div class="team-container">
+          <div v-for="(team, index) in teams" :key="index" class="team">
               <p-card>
                   <template #title>{{ team.name }}</template>
                   <template #content>
                       <p>Points: {{ team.points }}</p>
                       <p-button label="+1" @click="incrementPoints(index)" class="p-button-success"></p-button>
+                      <p-button label="-1" @click="decrementPoints(index)" class="p-button-danger" style="margin-left: 0.5rem;"></p-button>
                   </template>
               </p-card>
           </div>
+        </div>
       </div>
     </div>
 
@@ -48,6 +61,9 @@
               },
               incrementPoints(index) {
                   this.teams[index].points++;
+              },
+              decrementPoints(index) {
+                  this.teams[index].points--;
               }
           }
       });
