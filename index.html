@@ -1,85 +1,44 @@
+
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team Counter</title>
-    <link rel="stylesheet" href="https://unpkg.com/@primevue/themes/umd/aura.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 1rem;
-            background-color: #f4f4f4;
-        }
-        #app {
-            max-width: 600px;
-            margin: auto;
-        }
-    </style>
-</head>
-<body>
-<div id="app">
-    <h1>Team Counter</h1>
-    <div>
-        <p-input-text v-model="newTeam" placeholder="Enter team name"></p-input-text>
-        <p-button label="Add Team" @click="addTeam"></p-button>
+  <head>
+    <title>PrimeVue + CDN</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+    <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
+
+    <div id="app">
+      <p-datepicker v-model="date"></p-datepicker>
+      <br /><br />
+      {{ date }}
     </div>
-    <div v-if="teams.length" style="margin-top: 1rem;">
-        <div v-for="(team, index) in teams" :key="index" class="team" style="margin-bottom: 1rem;">
-            <p-card>
-                <template #title>{{ team.name }}</template>
-                <template #content>
-                    <p>Points: {{ team.points }}</p>
-                    <p-button label="+1" @click="incrementPoints(index)" class="p-button-success"></p-button>
-                </template>
-            </p-card>
-        </div>
-    </div>
-</div>
 
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
-<script src="https://unpkg.com/primevue/umd/inputtext/inputtext.umd.js"></script>
-<script src="https://unpkg.com/primevue/umd/button/button.umd.js"></script>
-<script src="https://unpkg.com/primevue/umd/card/card.umd.js"></script>
+    <script>
+      const { createApp, ref } = Vue;
 
-<script>
-const { createApp } = Vue;
-const PrimeVue = window.PrimeVue;
-const InputText = window['primevue']['inputtext'];
-const Button = window['primevue']['button'];
-const Card = window['primevue']['card'];
+      const app = createApp({
+        setup() {
+          const date = ref();
 
-const app = createApp({
-    data() {
-        return {
-            newTeam: '',
-            teams: []
-        };
-    },
-    methods: {
-        addTeam() {
-            if (this.newTeam.trim() === '') return;
-            this.teams.push({ name: this.newTeam, points: 0 });
-            this.newTeam = '';
+          return {
+            date
+          };
         },
-        incrementPoints(index) {
-            this.teams[index].points++;
+      });
+
+      app.use(PrimeVue.Config, {
+        theme: {
+            preset: PrimeVue.Themes.Aura
         }
-    }
-});
+      });
 
-app.use(PrimeVue.Config, {
-  theme: {
-      preset: PrimeVue.Themes.Aura
-  }
-});
+      app.component('p-datepicker', PrimeVue.DatePicker);
 
-app.component('p-input-text', InputText);
-app.component('p-button', Button);
-app.component('p-card', Card);
-app.mount('#app');
-</script>
-</body>
+      app.mount('#app');
+    </script>
+  </body>
 </html>
