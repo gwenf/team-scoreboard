@@ -40,16 +40,18 @@
 
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
-<script src="https://unpkg.com/primevue/umd/inputtext/inputtext.min.js"></script>
-<script src="https://unpkg.com/primevue/umd/button/button.min.js"></script>
-<script src="https://unpkg.com/primevue/umd/card/card.min.js"></script>
+<script src="https://unpkg.com/primevue/umd/inputtext/inputtext.umd.js"></script>
+<script src="https://unpkg.com/primevue/umd/button/button.umd.js"></script>
+<script src="https://unpkg.com/primevue/umd/card/card.umd.js"></script>
 
 <script>
 const { createApp } = Vue;
 const PrimeVue = window.PrimeVue;
-const { InputText, Button, Card } = PrimeVue;
+const InputText = window['primevue']['inputtext'];
+const Button = window['primevue']['button'];
+const Card = window['primevue']['card'];
 
-createApp({
+const app = createApp({
     data() {
         return {
             newTeam: '',
@@ -66,11 +68,18 @@ createApp({
             this.teams[index].points++;
         }
     }
-}).use(PrimeVue)
-  .component('p-input-text', InputText)
-  .component('p-button', Button)
-  .component('p-card', Card)
-  .mount('#app');
+});
+
+app.use(PrimeVue.Config, {
+  theme: {
+      preset: PrimeVue.Themes.Aura
+  }
+});
+
+app.component('p-input-text', InputText);
+app.component('p-button', Button);
+app.component('p-card', Card);
+app.mount('#app');
 </script>
 </body>
 </html>
