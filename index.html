@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>PrimeVue + CDN</title>
+    <title>Game Scoreboard</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
   </head>
@@ -12,7 +12,7 @@
     <script src="https://unpkg.com/@primevue/themes/umd/aura.min.js"></script>
 
     <div id="app">
-      <h1>Team Counter</h1>
+      <h1>Official Scoreboard</h1>
       <div>
           <p-input-text v-model="newTeam" placeholder="Enter team name"></p-input-text>
           <p-button label="Add Team" @click="addTeam"></p-button>
@@ -58,9 +58,9 @@
         }
       });
 
-      app.component('p-input-text', InputText);
-      app.component('p-button', Button);
-      app.component('p-card', Card);
+      app.component('p-input-text', PrimeVue.InputText);
+      app.component('p-button', PrimeVue.Button);
+      app.component('p-card', PrimeVue.Card);
 
       app.mount('#app');
     </script>
