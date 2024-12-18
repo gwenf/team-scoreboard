@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Counter</title>
+    <link rel="stylesheet" href="https://unpkg.com/@primevue/themes/umd/aura.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 1rem;
+            background-color: #f4f4f4;
+        }
+        #app {
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <h1>Team Counter</h1>
+    <div>
+        <p-input-text v-model="newTeam" placeholder="Enter team name"></p-input-text>
+        <p-button label="Add Team" @click="addTeam"></p-button>
+    </div>
+    <div v-if="teams.length" style="margin-top: 1rem;">
+        <div v-for="(team, index) in teams" :key="index" class="team" style="margin-bottom: 1rem;">
+            <p-card>
+                <template #title>{{ team.name }}</template>
+                <template #content>
+                    <p>Points: {{ team.points }}</p>
+                    <p-button label="+1" @click="incrementPoints(index)" class="p-button-success"></p-button>
+                </template>
+            </p-card>
+        </div>
+    </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/primevue/umd/primevue.min.js"></script>
+<script src="https://unpkg.com/primevue/umd/inputtext/inputtext.min.js"></script>
+<script src="https://unpkg.com/primevue/umd/button/button.min.js"></script>
+<script src="https://unpkg.com/primevue/umd/card/card.min.js"></script>
+
+<script>
+const { createApp } = Vue;
+const { InputText, Button, Card } = PrimeVue;
+
+createApp({
+    data() {
+        return {
+            newTeam: '',
+            teams: []
+        };
+    },
+    methods: {
+        addTeam() {
+            if (this.newTeam.trim() === '') return;
+            this.teams.push({ name: this.newTeam, points: 0 });
+            this.newTeam = '';
+        },
+        incrementPoints(index) {
+            this.teams[index].points++;
+        }
+    }
+}).component('p-input-text', InputText)
+  .component('p-button', Button)
+  .component('p-card', Card)
+  .mount('#app');
+</script>
+</body>
+</html>
