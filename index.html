@@ -26,6 +26,7 @@
       <div>
           <p-input-text v-model="newTeam" placeholder="Enter team name"></p-input-text>
           <p-button label="Add Team" @click="addTeam"></p-button>
+          <p-button label="Clear Teams" class="p-button-danger" @click="confirmClearTeams" style="margin-left: 1rem;"></p-button>
       </div>
       <div v-if="teams.length" style="margin-top: 1rem;">
         <div class="team-container">
@@ -50,7 +51,7 @@
           data() {
               return {
                   newTeam: '',
-                  teams: []
+                  teams: JSON.parse(localStorage.getItem('teams')) || []
               };
           },
           methods: {
@@ -58,12 +59,27 @@
                   if (this.newTeam.trim() === '') return;
                   this.teams.push({ name: this.newTeam, points: 0 });
                   this.newTeam = '';
+                  this.saveTeams();
               },
               incrementPoints(index) {
                   this.teams[index].points++;
+                  this.saveTeams();
               },
               decrementPoints(index) {
                   this.teams[index].points--;
+                  this.saveTeams();
+              },
+              saveTeams() {
+                  localStorage.setItem('teams', JSON.stringify(this.teams));
+              },
+              clearTeams() {
+                  this.teams = [];
+                  localStorage.removeItem('teams');
+              },
+              confirmClearTeams() {
+                  if (confirm('Are you sure you want to clear all teams?')) {
+                      this.clearTeams();
+                  }
               }
           }
       });
