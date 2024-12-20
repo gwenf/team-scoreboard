@@ -24,7 +24,7 @@
     <div id="app">
       <h1>Official Scoreboard</h1>
       <div>
-          <p-input-text v-model="newTeam" placeholder="Enter team name"></p-input-text>
+          <p-input-text v-model="newTeam" @keyup.enter="addTeam" placeholder="Enter team name"></p-input-text>
           <p-button label="Add Team" @click="addTeam"></p-button>
           <p-button label="Clear Teams" class="p-button-danger" @click="confirmClearTeams" style="margin-left: 1rem;"></p-button>
       </div>
